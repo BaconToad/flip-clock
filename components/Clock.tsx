@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Animated, Easing, Dimensions } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 import { clockStyles } from './styles'
+import Svg, * as SvgComponents from 'react-native-svg'
 
 namespace Clock {
     export interface Props {
@@ -72,20 +73,35 @@ namespace Clock {
                                 clockStyles.card__top,
                                 cardRotationStyles({ height: width / 2.0, degree: topCardRotationDegree }).card_front_top
                             ]}>
-                                <Text style={[clockStyles.text, clockStyles.textTop]}>{oldNumber}</Text>
+                                <View style={[
+                                    clockStyles.textWrapper, 
+                                    clockStyles.textWrapperTop
+                                ]}>
+                                    <Text style={[clockStyles.text]}>{oldNumber}</Text>
+                                </View>
                             </Animated.View>
                             <View className="card__front__bottom" data-value='5' style={[
                                 clockStyles.card__share,
                                 clockStyles.card__front,
                                 clockStyles.card__bottom]}>
-                                <Text style={[clockStyles.text, clockStyles.textBottom]}>{oldNumber}</Text>
+                                <View style={[
+                                    clockStyles.textWrapper, 
+                                    clockStyles.textWrapperBottom
+                                ]}>
+                                    <Text style={[clockStyles.text]}>{oldNumber}</Text>
+                                </View>
                             </View>
                             <View className="card__back__top" data-value='4' style={[
                                 clockStyles.card__share,
                                 clockStyles.card__back,
                                 clockStyles.card__top,
                             ]}>
-                                <Text style={[clockStyles.text, clockStyles.textTop]}>{props.number}</Text>
+                                <View style={[
+                                    clockStyles.textWrapper, 
+                                    clockStyles.textWrapperTop
+                                ]}>
+                                    <Text style={[clockStyles.text]}>{props.number}</Text>
+                                </View>
                             </View>
                             <Animated.View className="card__back__bottom" data-value='4' style={[
                                 clockStyles.card__share,
@@ -93,7 +109,12 @@ namespace Clock {
                                 clockStyles.card__bottom,
                                 cardRotationStyles({ height: width / 2.0, degree: bottomCardRotationDegree }).card_front_bottom
                             ]}>
-                                <Text style={[clockStyles.text, clockStyles.textBottom]}>{props.number}</Text>
+                                <View style={[
+                                    clockStyles.textWrapper, 
+                                    clockStyles.textWrapperBottom
+                                ]}>
+                                    <Text style={[clockStyles.text]}>{props.number}</Text>
+                                </View>
                             </Animated.View>
                         </View>
                     </View>
@@ -104,10 +125,7 @@ namespace Clock {
 
     const cardRotationStyles = (props) => StyleSheet.create({
         card_front_top: {
-            backgroundColor: 'coral',
             zIndex: 1,
-            // borderWidth: 1,
-            // borderColor: 'black',
             transform: [
                 { perspective: props.height * 5 },
                 {
@@ -122,7 +140,6 @@ namespace Clock {
             ]
         },
         card_front_bottom: {
-            backgroundColor: 'coral',
             zIndex: 2,
             transform: [
                 { perspective: props.height * 5 },

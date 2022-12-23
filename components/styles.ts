@@ -3,20 +3,31 @@ import { StyleSheet, Text, View, Pressable, Animated, Dimensions } from 'react-n
 const window = Dimensions.get("window");
 const clockWidth = 300;
 const borderRadius = 5;
+const textHeight = clockWidth * 1.175;
 
 export const clockStyles = StyleSheet.create({
   text: {
-    position: 'absolute',
-    flex: 1,
+    position: 'relative',
+    display: 'flex',
     fontSize: clockWidth,
+    //React Native has a problem with line height for now -> make a ugly fix
+    height: textHeight,
+    alignSelf: 'center',
+    fontFamily: 'Grotesk',
+    color: '#B7B7B7'
+  },
+  textWrapper: {
+    position: 'absolute',
+    display: 'flex',
     width: '100%',
-    lineHeight: clockWidth,
-    textAlign: 'center',
+    height: clockWidth,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  textTop: {
-    top: 0,
+  textWrapperTop: {
+    top: 0
   },
-  textBottom: {
+  textWrapperBottom: {
     bottom: 0,
   },
   flipClock: {
@@ -27,7 +38,6 @@ export const clockStyles = StyleSheet.create({
   flipClock__piece: {
     display: 'flex',
     height: '100%',
-    borderColor: 'yellow'
   },
   card: {
     display: 'flex',
@@ -39,22 +49,24 @@ export const clockStyles = StyleSheet.create({
     height: '50%',
     width: '100%',
     position: 'absolute',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    backgroundColor: '#282828'
   },
   card__top: {
-    backgroundColor: 'lightgray',
+    borderBottomColor: 'white',
+    borderBottomWidth: 2,
     borderTopLeftRadius: borderRadius,
     borderTopRightRadius: borderRadius,
-    overflow: 'hidden'
   },
   card__bottom: {
-    position: 'absolute',
     top: '50%',
     left: 0,
-    backgroundColor: 'darkgray',
     borderBottomLeftRadius: borderRadius,
     borderBottomRightRadius: borderRadius,
+    borderTopColor: 'white',
+    borderTopWidth: 2,
     alignItems: 'center',
-    overflow: 'hidden'
   },
   card__front: {
       zIndex: -1
