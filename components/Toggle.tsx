@@ -48,7 +48,7 @@ namespace Toggle {
         thumb: {
             height: '100%',
             width: 34,
-            left: props.position//`${props.position}%`,
+            left: props.position
 
         },
         thumbImage: {

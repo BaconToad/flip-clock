@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Pressable, Animated, Easing, Dimensions } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
-import { clockStyles, animatedStyleX1 } from './styles'
+import { clockStyles } from './styles'
 
 namespace Clock {
     export interface Props {
@@ -29,18 +29,6 @@ namespace Clock {
             console.log('animate...');
             topCardRotation.setValue(0);
             bottomCardRotation.setValue(0);
-            // Animated.timing(
-            //     topCardRotation,
-            //     animationConfig
-            // ).start(() => {
-            //     Animated.timing(
-            //         bottomCardRotation,
-            //         {
-            //             ...animationConfig,
-            //             //delay: 450
-            //         }
-            //     ).start();
-            // });
 
             Animated.parallel([
                 Animated.timing(
@@ -70,7 +58,6 @@ namespace Clock {
         const bottomCardRotationDegree = bottomCardRotation.interpolate({
             inputRange: [0, 1],
             outputRange: ['90deg', '0deg'],
-            // easing: Easing.linear
             easing: Easing.out(Easing.exp)
         });
         console.log(topCardRotationDegree)
@@ -82,10 +69,8 @@ namespace Clock {
                         <View style={clockStyles.card}>
                             <Animated.View className="card__front__top" style={[
                                 clockStyles.card__share,
-                                // clockStyles.card__front,
                                 clockStyles.card__top,
                                 cardRotationStyles({ height: width / 2.0, degree: topCardRotationDegree }).card_front_top
-                                //animatedStyleX1({degree: topCardRotationDegree})
                             ]}>
                                 <Text style={[clockStyles.text, clockStyles.textTop]}>{oldNumber}</Text>
                             </Animated.View>
@@ -99,9 +84,6 @@ namespace Clock {
                                 clockStyles.card__share,
                                 clockStyles.card__back,
                                 clockStyles.card__top,
-                                // {
-                                //     zIndex: 1
-                                // }
                             ]}>
                                 <Text style={[clockStyles.text, clockStyles.textTop]}>{props.number}</Text>
                             </View>
