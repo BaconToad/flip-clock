@@ -4,19 +4,25 @@ import Toggle from './components/Toggle'
 import Clock from './components/Clock'
 import { useFonts } from 'expo-font';
 
-const clockWidth = 300;
-
 export default function App() {
 
-  const [counter, setCounter] = useState(0);
+  const [timeParts, setTimeParts] = useState([]);
 
   useEffect(() => {
-    let interval = setInterval(() => {
-      if (counter == 9)
-        setCounter(0);
-      else
-        setCounter(counter + 1);
-    }, 1000);
+    let interval = undefined;
+    setTimeout(() => {
+      interval = setInterval(() => {
+        let date = new Date();
+        let decMinutes = date.getMinutes() == 0 ? 0 : Math.floor(date.getMinutes() / 10);
+        let minutes = date.getMinutes() == 0 ? 0 : date.getMinutes() % 10;
+        let decSeconds = date.getSeconds() == 0 ? 0 : Math.floor(date.getSeconds() / 10);
+        let seconds = date.getSeconds() == 0 ? 0 : date.getSeconds() % 10;
+  
+        console.log(date.getMinutes().toString(), date.getSeconds().toString(), decMinutes, minutes, decSeconds, seconds);
+        setTimeParts([decMinutes, minutes, decSeconds, seconds]);
+      }, 100);
+    }, 1000 - (new Date()).getMilliseconds()); //for align clock system's miliseconds
+    
     return () => {
       clearInterval(interval);
     }
@@ -29,10 +35,25 @@ export default function App() {
   if (!isFontLoaded)
     return null;
 
+  const clockContainerSize = Dimensions.get('window').width * 0.7; 
+  const clockWidth = clockContainerSize / 4.5;
+  
   return (
     <View style={styles.container}>
-      <View style={{ width: clockWidth, height: clockWidth }}>
-        <Clock.Component width={300} number={counter} />
+      <View style={{ 
+          width: clockContainerSize, 
+          height: clockContainerSize,
+          flexDirection: 'row',
+          backgroundColor: 'aqua',
+          justifyContent: 'space-around'
+        }}>
+        <Clock.Component width={clockWidth} number={timeParts[0]} />
+        <Clock.Component width={clockWidth} number={timeParts[1]} />
+        <View style={{
+          width: clockWidth / 2
+        }}/>
+        <Clock.Component width={clockWidth} number={timeParts[2]} />
+        <Clock.Component width={clockWidth} number={timeParts[3]} />
       </View>
     </View>
   );

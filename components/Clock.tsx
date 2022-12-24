@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, Pressable, Animated, Easing, Dimensions } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
-import { clockStyles } from './styles'
-import Svg, * as SvgComponents from 'react-native-svg'
+import { creteClockStyles } from './ClockStyles'
 
 namespace Clock {
     export interface Props {
@@ -14,11 +13,9 @@ namespace Clock {
         let bottomCardRotation = useRef(new Animated.Value(0)).current
         const [oldNumber, setOldNimber] = useState(props.number);
 
-        const duration = 600;
-        console.log('old', oldNumber);
-        console.log('new', props.number)
-
-        let width = props.width;
+        const duration = 800;
+        const width = props.width;
+        const height = props.width * 2;
 
         const animationConfig = {
             useNativeDriver: false,
@@ -27,7 +24,6 @@ namespace Clock {
         }
 
         useEffect(() => {
-            console.log('animate...');
             topCardRotation.setValue(0);
             bottomCardRotation.setValue(0);
 
@@ -53,7 +49,6 @@ namespace Clock {
         const topCardRotationDegree = topCardRotation.interpolate({
             inputRange: [0, 1],
             outputRange: ['0deg', '-90deg'],
-            //easing: Easing.linear
             easing: Easing.in(Easing.exp)
         });
         const bottomCardRotationDegree = bottomCardRotation.interpolate({
@@ -61,7 +56,8 @@ namespace Clock {
             outputRange: ['90deg', '0deg'],
             easing: Easing.out(Easing.exp)
         });
-        console.log(topCardRotationDegree)
+
+        const clockStyles = creteClockStyles({height: height, width: width});
 
         return (
             <>
@@ -71,7 +67,7 @@ namespace Clock {
                             <Animated.View className="card__front__top" style={[
                                 clockStyles.card__share,
                                 clockStyles.card__top,
-                                cardRotationStyles({ height: width / 2.0, degree: topCardRotationDegree }).card_front_top
+                                createCardRotationStyles({ height: height, degree: topCardRotationDegree }).card_front_top
                             ]}>
                                 <View style={[
                                     clockStyles.textWrapper, 
@@ -107,7 +103,7 @@ namespace Clock {
                                 clockStyles.card__share,
                                 clockStyles.card__back,
                                 clockStyles.card__bottom,
-                                cardRotationStyles({ height: width / 2.0, degree: bottomCardRotationDegree }).card_front_bottom
+                                createCardRotationStyles({ height: height, degree: bottomCardRotationDegree }).card_back_bottom
                             ]}>
                                 <View style={[
                                     clockStyles.textWrapper, 
@@ -123,34 +119,34 @@ namespace Clock {
         )
     }
 
-    const cardRotationStyles = (props) => StyleSheet.create({
+    const createCardRotationStyles = (props) => StyleSheet.create({
         card_front_top: {
-            zIndex: 1,
+            zIndex: 11,
             transform: [
-                { perspective: props.height * 5 },
+                { perspective: 2000 },
                 {
-                    translateY: (props.height / 2.0)
+                    translateY: (props.height / 4.0)
                 },
                 {
                     rotateX: props.degree
                 },
                 {
-                    translateY: -1 * (props.height / 2.0)
+                    translateY: -1 * (props.height / 4.0)
                 },
             ]
         },
-        card_front_bottom: {
-            zIndex: 2,
+        card_back_bottom: {
+            zIndex: 12,
             transform: [
-                { perspective: props.height * 5 },
+                { perspective: 2000 },
                 {
-                    translateY: -1 * (props.height / 2.0)
+                    translateY: -1 * (props.height / 4.0)
                 },
                 {
                     rotateX: props.degree
                 },
                 {
-                    translateY: (props.height / 2.0)
+                    translateY: (props.height / 4.0)
                 },
             ]
         },

@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View, Pressable, Animated, Dimensions } from 'react-native';
 
-const window = Dimensions.get("window");
-const clockWidth = 300;
-const borderRadius = 5;
-const textHeight = clockWidth * 1.175;
+export interface Props {
+  height: number,
+  width: number
+}
 
-export const clockStyles = StyleSheet.create({
+export const creteClockStyles = (props: Props) => StyleSheet.create({
   text: {
     position: 'relative',
     display: 'flex',
-    fontSize: clockWidth,
+    fontSize: props.height,
     //React Native has a problem with line height for now -> make a ugly fix
-    height: textHeight,
+    height: props.height * 1.175,
     alignSelf: 'center',
     fontFamily: 'Grotesk',
     color: '#B7B7B7'
@@ -20,7 +20,7 @@ export const clockStyles = StyleSheet.create({
     position: 'absolute',
     display: 'flex',
     width: '100%',
-    height: clockWidth,
+    height: props.height,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -32,8 +32,11 @@ export const clockStyles = StyleSheet.create({
   },
   flipClock: {
     textAlign: 'center',
-    height: clockWidth,
-    width: clockWidth,
+    height: props.height,
+    width: props.width,
+    margin: props.width/10,
+    borderColor: 'red',
+    borderWidth: 1
   },
   flipClock__piece: {
     display: 'flex',
@@ -55,23 +58,23 @@ export const clockStyles = StyleSheet.create({
   },
   card__top: {
     borderBottomColor: 'white',
-    borderBottomWidth: 2,
-    borderTopLeftRadius: borderRadius,
-    borderTopRightRadius: borderRadius,
+    borderBottomWidth: 1.5,
+    borderTopLeftRadius: props.width / 5,
+    borderTopRightRadius: props.width / 5,
   },
   card__bottom: {
     top: '50%',
     left: 0,
-    borderBottomLeftRadius: borderRadius,
-    borderBottomRightRadius: borderRadius,
+    borderBottomLeftRadius: props.width / 5,
+    borderBottomRightRadius: props.width / 5,
     borderTopColor: 'white',
-    borderTopWidth: 2,
+    borderTopWidth: 1.5,
     alignItems: 'center',
   },
   card__front: {
-      zIndex: -1
+      zIndex: 0
   },
   card__back: {
-      zIndex: -1
+      zIndex: 0
   }
 });
