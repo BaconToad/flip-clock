@@ -35,8 +35,8 @@ export const creteClockStyles = (props: Props) => StyleSheet.create({
     height: props.height,
     width: props.width,
     margin: props.width/10,
-    borderColor: 'red',
-    borderWidth: 1
+    // borderColor: 'red',
+    // borderWidth: 1
   },
   flipClock__piece: {
     display: 'flex',
